@@ -4,8 +4,7 @@ In this HW you will have a practice with different inheritance strategies.
 
 Action items:
 
-    - Clone the project. 
-    - Configure Hibernate. 
+    - Fork the project. 
     - Add required annotations in model classes. 
     - Implement all methods in DAOs
     
