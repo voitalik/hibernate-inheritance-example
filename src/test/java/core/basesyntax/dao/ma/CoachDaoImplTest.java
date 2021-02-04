@@ -4,6 +4,7 @@ import core.basesyntax.dao.AbstractTest;
 import core.basesyntax.model.ma.Coach;
 import core.basesyntax.model.ma.Mentor;
 import core.basesyntax.model.ma.Person;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +14,7 @@ public class CoachDaoImplTest extends AbstractTest {
 
     @Override
     protected Class<?>[] entities() {
-        return new Class[] {
+        return new Class[]{
                 Person.class,
                 Coach.class,
                 Mentor.class
@@ -30,7 +31,6 @@ public class CoachDaoImplTest extends AbstractTest {
         Coach coach = new Coach();
         coach.setName("Coach");
         coach.setAge(30);
-        coach.setTrack(Coach.Track.JAVA);
         coach.setExperience(3);
         Coach secondCoach = new Coach();
         secondCoach.setName("SecondCoach");
@@ -38,7 +38,10 @@ public class CoachDaoImplTest extends AbstractTest {
         secondCoach.setExperience(2);
         coachDao.save(coach);
         coachDao.save(secondCoach);
-        Assert.assertEquals("Coach", coachDao.findByExperienceGreaterThan(2).get(0).getName());
+
+        List<Coach> coaches = coachDao.findByExperienceGreaterThan(2);
+        Assert.assertEquals(1, coaches.size());
+        Assert.assertEquals("Coach", coaches.get(0).getName());
     }
 
     @Test

@@ -10,6 +10,8 @@ import org.junit.Test;
 import java.util.List;
 
 public class FigureDaoImplTest extends AbstractTest {
+    public static final String PINK_COLOR = "Pink";
+    public static final String RED_COLOR = "Red";
     private FigureDao<Figure> figureDao;
 
     @Override
@@ -28,7 +30,7 @@ public class FigureDaoImplTest extends AbstractTest {
     @Test
     public void createCircle_Ok() {
         Circle circle = new Circle();
-        circle.setColor("Pink");
+        circle.setColor(PINK_COLOR);
         circle.setRadius(5);
         Figure actualCircle = figureDao.save(circle);
         Assert.assertNotNull(actualCircle);
@@ -38,7 +40,7 @@ public class FigureDaoImplTest extends AbstractTest {
     @Test
     public void createTriangle_Ok() {
         Triangle triangle = new Triangle();
-        triangle.setColor("Red");
+        triangle.setColor(RED_COLOR);
         triangle.setArea(10);
         Figure actualTriangle = figureDao.save(triangle);
         Assert.assertNotNull(actualTriangle);
@@ -49,17 +51,16 @@ public class FigureDaoImplTest extends AbstractTest {
     public void findByColor_Ok() {
         FigureDao<Triangle> triangleFigureDao = new FigureDaoImpl<>(getSessionFactory());
         Triangle redTriangle = new Triangle();
-        redTriangle.setColor("Red");
+        redTriangle.setColor(RED_COLOR);
         Triangle pinkTriangle = new Triangle();
-        pinkTriangle.setColor("Pink");
-        pinkTriangle.setArea(6);
+        pinkTriangle.setColor(PINK_COLOR);
         Triangle secondPinkTriangle = new Triangle();
-        secondPinkTriangle.setColor("Pink");
-        secondPinkTriangle.setArea(10);
+        secondPinkTriangle.setColor(PINK_COLOR);
+
         figureDao.save(redTriangle);
         figureDao.save(pinkTriangle);
         figureDao.save(secondPinkTriangle);
-        List<Triangle> pinkTriangles = triangleFigureDao.findByColor("Pink", Triangle.class);
+        List<Triangle> pinkTriangles = triangleFigureDao.findByColor(PINK_COLOR, Triangle.class);
         Assert.assertNotNull(pinkTriangle);
         Assert.assertEquals(2, pinkTriangles.size());
     }

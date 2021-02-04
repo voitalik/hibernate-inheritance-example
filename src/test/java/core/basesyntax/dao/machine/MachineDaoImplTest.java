@@ -4,6 +4,7 @@ import core.basesyntax.dao.AbstractTest;
 import core.basesyntax.model.machine.Car;
 import core.basesyntax.model.machine.Machine;
 import core.basesyntax.model.machine.Truck;
+import java.time.LocalDate;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,14 +63,30 @@ public class MachineDaoImplTest extends AbstractTest {
     @Test
     public void findByAgeOlderThan_Ok() {
         Machine machine = new Machine();
-        machine.setYear(2018);
+        int currentYear = LocalDate.now().getYear();
+        machine.setYear(currentYear - 2);
         Car car = new Car();
-        car.setYear(2016);
+        car.setYear(currentYear - 3);
         Truck truck = new Truck();
-        truck.setYear(2017);
+        truck.setYear(currentYear - 4);
         machineDao.save(car);
         machineDao.save(truck);
         machineDao.save(machine);
         Assert.assertEquals(2, machineDao.findByAgeOlderThan(2).size());
+    }
+
+    @Test
+    public void findByAgeOlderThan_zeroMachines() {
+        Machine machine = new Machine();
+        int currentYear = LocalDate.now().getYear();
+        machine.setYear(currentYear - 2);
+        Car car = new Car();
+        car.setYear(currentYear - 1);
+        Truck truck = new Truck();
+        truck.setYear(currentYear);
+        machineDao.save(car);
+        machineDao.save(truck);
+        machineDao.save(machine);
+        Assert.assertEquals(0, machineDao.findByAgeOlderThan(2).size());
     }
 }
