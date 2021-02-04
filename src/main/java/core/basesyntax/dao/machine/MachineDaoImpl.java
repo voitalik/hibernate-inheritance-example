@@ -7,7 +7,7 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 
 public class MachineDaoImpl extends AbstractDao implements MachineDao {
-    public MachineDaoImpl(SessionFactory sessionFactory) {
+    protected MachineDaoImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 

@@ -1,4 +1,3 @@
-
 package core.basesyntax.dao.figure;
 
 import core.basesyntax.dao.AbstractDao;
