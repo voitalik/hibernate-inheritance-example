@@ -1,4 +1,3 @@
-
 package core.basesyntax.dao.machine;
 
 import core.basesyntax.dao.AbstractDao;
