@@ -1,10 +1,5 @@
 package core.basesyntax.model.ma;
 
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-
-@Entity
-@PrimaryKeyJoinColumn(name = "coachId")
 public class Coach extends Person {
     public enum Track {
         JAVA, FE, UI, QA

@@ -1,8 +1,5 @@
 package core.basesyntax.model.figure;
 
-import javax.persistence.Entity;
-
-@Entity
 public class Circle extends Figure {
     private int radius;
 
