@@ -39,6 +39,9 @@ public class CoachDaoImplTest extends AbstractTest {
         coachDao.save(coach);
         coachDao.save(secondCoach);
 
+        Assert.assertNotNull(coach.getId());
+        Assert.assertNotNull(secondCoach.getId());
+
         List<Coach> coaches = coachDao.findByExperienceGreaterThan(2);
         Assert.assertEquals(1, coaches.size());
         Assert.assertEquals("Coach", coaches.get(0).getName());

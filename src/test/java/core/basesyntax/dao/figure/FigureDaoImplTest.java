@@ -13,6 +13,8 @@ public class FigureDaoImplTest extends AbstractTest {
     public static final String PINK_COLOR = "Pink";
     public static final String RED_COLOR = "Red";
     private FigureDao<Figure> figureDao;
+    private FigureDao<Triangle> triangleDao;
+    private FigureDao<Circle> circleDao;
 
     @Override
     protected Class<?>[] entities() {
@@ -25,6 +27,8 @@ public class FigureDaoImplTest extends AbstractTest {
     @Before
     public void setUp() {
         figureDao = new FigureDaoImpl<>(getSessionFactory());
+        triangleDao = new FigureDaoImpl<>(getSessionFactory());
+        circleDao = new FigureDaoImpl<>(getSessionFactory());
     }
 
     @Test
@@ -48,8 +52,7 @@ public class FigureDaoImplTest extends AbstractTest {
     }
 
     @Test
-    public void findByColor_Ok() {
-        FigureDao<Triangle> triangleFigureDao = new FigureDaoImpl<>(getSessionFactory());
+    public void findByColor_Triangle_Ok() {
         Triangle redTriangle = new Triangle();
         redTriangle.setColor(RED_COLOR);
         Triangle pinkTriangle = new Triangle();
@@ -60,8 +63,30 @@ public class FigureDaoImplTest extends AbstractTest {
         figureDao.save(redTriangle);
         figureDao.save(pinkTriangle);
         figureDao.save(secondPinkTriangle);
-        List<Triangle> pinkTriangles = triangleFigureDao.findByColor(PINK_COLOR, Triangle.class);
-        Assert.assertNotNull(pinkTriangle);
+
+        List<Triangle> pinkTriangles = triangleDao.findByColor(PINK_COLOR, Triangle.class);
+        Assert.assertNotNull(redTriangle.getId());
+        Assert.assertNotNull(pinkTriangle.getId());
+        Assert.assertNotNull(secondPinkTriangle.getId());
         Assert.assertEquals(2, pinkTriangles.size());
+    }
+
+    @Test
+    public void findByColor_Circle_Ok() {
+        Circle redCircle = new Circle();
+        redCircle.setColor(RED_COLOR);
+        Circle pinkCircle = new Circle();
+        pinkCircle.setColor(PINK_COLOR);
+        Circle secondPinkCircle = new Circle();
+        secondPinkCircle.setColor(PINK_COLOR);
+
+        figureDao.save(redCircle);
+        figureDao.save(pinkCircle);
+        figureDao.save(secondPinkCircle);
+        List<Circle> pinkCircles = circleDao.findByColor(PINK_COLOR, Circle.class);
+        Assert.assertNotNull(redCircle.getId());
+        Assert.assertNotNull(pinkCircle.getId());
+        Assert.assertNotNull(secondPinkCircle.getId());
+        Assert.assertEquals(2, pinkCircles.size());
     }
 }

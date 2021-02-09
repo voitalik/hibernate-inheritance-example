@@ -40,6 +40,11 @@ public class MentorDaoImplTest extends AbstractTest {
         mentorDao.save(firstMentor);
         mentorDao.save(secondMentor);
         mentorDao.save(thirdMentor);
+
+        Assert.assertNotNull(firstMentor.getId());
+        Assert.assertNotNull(secondMentor.getId());
+        Assert.assertNotNull(thirdMentor.getId());
+
         List<Mentor> byAgeGreaterThan = mentorDao.findByAgeGreaterThan(20);
         Assert.assertEquals(2, byAgeGreaterThan.size());
     }
