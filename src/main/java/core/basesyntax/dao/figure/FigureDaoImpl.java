@@ -8,6 +8,9 @@ import org.hibernate.SessionFactory;
 public class FigureDaoImpl<T extends Figure> extends AbstractDao implements FigureDao<T> {
     public FigureDaoImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
+        System.out.println("Hello world");
+        System.out.println("Hello world");
+        System.out.println("Hello world");
     }
 
     @Override
