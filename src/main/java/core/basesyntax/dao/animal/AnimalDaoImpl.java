@@ -4,10 +4,13 @@ import core.basesyntax.dao.AbstractDao;
 import core.basesyntax.exception.DataProcessingException;
 import core.basesyntax.model.zoo.Animal;
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 public class AnimalDaoImpl extends AbstractDao implements AnimalDao {
     public AnimalDaoImpl(SessionFactory sessionFactory) {
@@ -39,10 +42,17 @@ public class AnimalDaoImpl extends AbstractDao implements AnimalDao {
     @Override
     public List<Animal> findByNameFirstLetter(Character character) {
         try (Session session = sessionFactory.openSession()) {
-            Query<Animal> getAllAnimals = session.createQuery("from Animal a"
-                    + " WHERE LOWER(a.name) LIKE LOWER(:c)", Animal.class);
-            getAllAnimals.setParameter("c", character.toString() + "%");
-            return getAllAnimals.getResultList();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Animal> cr = cb.createQuery(Animal.class);
+            Root<Animal> root = cr.from(Animal.class);
+            Predicate like = cb.like(cb.lower(root.get("name")),
+                    character.toString().toLowerCase() + "%");
+            cr.where(like);
+            return session.createQuery(cr).getResultList();
+            // Query<Animal> getAllAnimals = session.createQuery("from Animal a"
+            //      + " WHERE LOWER(a.name) LIKE LOWER(:c)", Animal.class);
+            // getAllAnimals.setParameter("c", character + "%");
+            // return getAllAnimals.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get animals by first letter: " + character, e);
         }
