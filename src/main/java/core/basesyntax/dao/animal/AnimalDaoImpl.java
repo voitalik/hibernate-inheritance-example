@@ -38,7 +38,6 @@ public class AnimalDaoImpl extends AbstractDao implements AnimalDao {
 
     @Override
     public List<Animal> findByNameFirstLetter(Character character) {
-        // todo Try solve by criteria query
         try (Session session = sessionFactory.openSession()) {
             Query<Animal> getAllAnimals = session.createQuery("from Animal a"
                     + " WHERE LOWER(a.name) LIKE LOWER(:c)", Animal.class);
